@@ -13,6 +13,6 @@ public class ImageActivity extends Activity {
 		setContentView(R.layout.activity_image);
 		SmartImageView view = (SmartImageView) findViewById(R.id.iv_image);
 		String url = getIntent().getExtras().getString("url");
-		view.setImageUrl(url);
+		view.setImageUrl(url, android.R.drawable.ic_dialog_alert, 0);
 	}
 }
