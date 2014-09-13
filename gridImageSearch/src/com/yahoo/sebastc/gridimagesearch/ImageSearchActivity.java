@@ -10,13 +10,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -25,8 +25,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 public class ImageSearchActivity extends Activity {
 
 	private EditText etQuery;
-	private ImageButton btnSearch;
 	private GridView gvResults;
+	private Settings settings;
 
 	private List<ImageResult> images;
 	private ImageResultArrayAdaptor aImages;
@@ -42,8 +42,13 @@ public class ImageSearchActivity extends Activity {
 		setupView();
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_settings, menu);
+		return true;
+	}
+
 	private void setupView() {
-		btnSearch = (ImageButton) findViewById(R.id.btnSearch);
 		etQuery = (EditText) findViewById(R.id.etQuery);
 		gvResults = (GridView) findViewById(R.id.gvResults);
 		gvResults.setAdapter(aImages);
@@ -74,9 +79,28 @@ public class ImageSearchActivity extends Activity {
 			public void onFailure(int statusCode, Header[] headers,
 					String responseString, Throwable throwable) {
 				Toast.makeText(ImageSearchActivity.this,
-						"Failure: " + statusCode+" / "+throwable, Toast.LENGTH_SHORT).show();
+						"Failure: " + statusCode + " / " + throwable,
+						Toast.LENGTH_SHORT).show();
 			}
 		});
 
+	}
+
+	public void onSettingsClick(MenuItem v) {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		intent.putExtra("settings", settings);
+		startActivityForResult(intent, 1);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+			if(requestCode==1) {
+				if(resultCode==RESULT_OK) {
+				Toast.makeText(this, "Got new settings", Toast.LENGTH_SHORT).show();
+				this.settings = (Settings) data.getSerializableExtra("settings");
+			} else {
+				Toast.makeText(this, "Preserved existing settings", Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 }
