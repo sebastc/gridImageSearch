@@ -25,72 +25,78 @@ public class SettingsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		settings = (Settings) getIntent().getSerializableExtra("settings");
-		setupSpinner(R.id.spinnerSize, settings.imageSize, new OnItemSelectedListener() {
+		setupSpinner(R.id.spinnerSize, settings.imageSize,
+				new OnItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				settings.imageSize = Size.values()[position];
-			}
+					@Override
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
+						settings.imageSize = Size.values()[position];
+					}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				settings.imageSize = Size.ALL;
-			}
-		});
-		setupSpinner(R.id.spinnerColor, settings.imageColor, new OnItemSelectedListener() {
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						settings.imageSize = Size.ALL;
+					}
+				});
+		setupSpinner(R.id.spinnerColor, settings.imageColor,
+				new OnItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				settings.imageColor = ImageColor.values()[position];
-			}
+					@Override
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
+						settings.imageColor = ImageColor.values()[position];
+					}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				settings.imageColor = ImageColor.ALL;
-			}
-		});
-		setupSpinner(R.id.spinnerType, settings.imageType, new OnItemSelectedListener() {
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						settings.imageColor = ImageColor.ALL;
+					}
+				});
+		setupSpinner(R.id.spinnerType, settings.imageType,
+				new OnItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				settings.imageType = ImageType.values()[position];
-			}
+					@Override
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
+						settings.imageType = ImageType.values()[position];
+					}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				settings.imageSize = Size.ALL;
-			}
-		});
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						settings.imageSize = Size.ALL;
+					}
+				});
 		setupTextField(R.id.etDomain, settings.imageDomain, new TextWatcher() {
-			
+
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 			}
-			
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 			}
-			
+
 			@Override
 			public void afterTextChanged(Editable s) {
 				settings.imageDomain = s.toString();
 			}
 		});
-		
+
 	}
 
-	private void setupSpinner(int id, Enum<?> value, OnItemSelectedListener listener) {
+	private void setupSpinner(int id, Enum<?> value,
+			OnItemSelectedListener listener) {
 		Spinner spinner = (Spinner) findViewById(id);
 		spinner.setSelection(value.ordinal());
 		spinner.setOnItemSelectedListener(listener);
 	}
+
 	private void setupTextField(int id, String value, TextWatcher listener) {
 		EditText spinner = (EditText) findViewById(id);
-		if(value !=null && value.trim().isEmpty())
+		if (value != null && value.trim().isEmpty())
 			value = null;
 		spinner.setText(value);
 		spinner.addTextChangedListener(listener);
@@ -101,7 +107,7 @@ public class SettingsActivity extends Activity {
 		getMenuInflater().inflate(R.menu.menu_ok, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	public void onOkClick(MenuItem v) {
 		Intent data = new Intent();
 		data.putExtra("settings", settings);

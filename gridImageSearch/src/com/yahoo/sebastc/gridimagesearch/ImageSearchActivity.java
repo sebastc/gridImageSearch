@@ -11,13 +11,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -90,6 +91,8 @@ public class ImageSearchActivity extends Activity {
 
 	private void onImageSearch() {
 		aImages.clear();
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(etQuery.getWindowToken(), 0);
 		String query = etQuery.getText().toString();
 		AsyncHttpClient client = new AsyncHttpClient();
 		StringBuilder requestUrl = new StringBuilder(
@@ -136,10 +139,14 @@ public class ImageSearchActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
-				Toast.makeText(this, "Got new settings", Toast.LENGTH_SHORT)
+				Toast.makeText(this, "Got updated settings", Toast.LENGTH_SHORT)
 						.show();
 				this.settings = (Settings) data
 						.getSerializableExtra("settings");
+				aImages.clear();
+				etQuery.requestFocus();
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.showSoftInputFromInputMethod(etQuery.getWindowToken(), 0); //FIXME the soft keyboard is not showing !!??
 			} else {
 				Toast.makeText(this, "Preserved existing settings",
 						Toast.LENGTH_SHORT).show();
