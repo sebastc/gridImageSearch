@@ -40,7 +40,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btnSearch"
         android:gravity="fill"
-        android:numColumns="3" >
+        android:numColumns="@integer/nb_columns" >
     </GridView>
 
 </RelativeLayout>
