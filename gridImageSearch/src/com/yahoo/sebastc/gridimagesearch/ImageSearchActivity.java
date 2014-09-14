@@ -38,6 +38,7 @@ public class ImageSearchActivity extends Activity {
 
 		images = new ArrayList<ImageResult>();
 		aImages = new ImageResultArrayAdaptor(this, images);
+		settings = new Settings();
 
 		setupView();
 	}
