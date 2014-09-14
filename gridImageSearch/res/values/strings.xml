@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Image Search</string>
-    <string name="search">Search...</string>
+    <string name="search">Search&#8230;</string>
     <string name="title_activity_image">ImageActivity</string>
     <string name="settings">Settings</string>
     <string name="settings_image_size_label">Size</string>
@@ -12,5 +12,6 @@
     <string name="title_activity_settings">Settings</string>
     <string name="ok">OK</string>
     <string name="settings_image_domain_hint">All</string>
+    <string name="share">Share&#8230;</string>
 
 </resources>

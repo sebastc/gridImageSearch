@@ -5,6 +5,8 @@
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -16,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ImageSearchActivity"
+            android:name=".SearchActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateVisible" >
             <intent-filter>
@@ -27,13 +29,13 @@
         </activity>
         <activity
             android:name=".ImageActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:label="@string/title_activity_image" >
+            android:label="@string/title_activity_image"
+            android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
     </application>
 

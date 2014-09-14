@@ -29,7 +29,7 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class ImageSearchActivity extends Activity {
+public class SearchActivity extends Activity {
 
 	private EditText etQuery;
 	private GridView gvResults;
@@ -41,7 +41,7 @@ public class ImageSearchActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_image_search);
+		setContentView(R.layout.activity_search);
 
 		images = new ArrayList<ImageResult>();
 		aImages = new ImageResultArrayAdaptor(this, images);
@@ -52,7 +52,7 @@ public class ImageSearchActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_settings, menu);
+		getMenuInflater().inflate(R.menu.menu_search_activity, menu);
 		return true;
 	}
 
@@ -120,7 +120,7 @@ public class ImageSearchActivity extends Activity {
 			@Override
 			public void onFailure(int statusCode, Header[] headers,
 					String responseString, Throwable throwable) {
-				Toast.makeText(ImageSearchActivity.this,
+				Toast.makeText(SearchActivity.this,
 						"Failure: " + statusCode + " / " + throwable,
 						Toast.LENGTH_SHORT).show();
 			}

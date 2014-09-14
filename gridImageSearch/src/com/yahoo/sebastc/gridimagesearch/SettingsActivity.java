@@ -104,7 +104,7 @@ public class SettingsActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_ok, menu);
+		getMenuInflater().inflate(R.menu.menu_settings_activity, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
