@@ -13,11 +13,15 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -52,6 +56,15 @@ public class ImageSearchActivity extends Activity {
 
 	private void setupView() {
 		etQuery = (EditText) findViewById(R.id.etQuery);
+		etQuery.setOnEditorActionListener(new OnEditorActionListener() {
+
+			@Override
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				onImageSearch();
+				return true;
+			}
+		});
 		gvResults = (GridView) findViewById(R.id.gvResults);
 		gvResults.setAdapter(aImages);
 	}
@@ -72,16 +85,22 @@ public class ImageSearchActivity extends Activity {
 	}
 
 	public void onImageSearch(View v) {
+		onImageSearch();
+	}
+
+	private void onImageSearch() {
 		aImages.clear();
 		String query = etQuery.getText().toString();
 		AsyncHttpClient client = new AsyncHttpClient();
-		StringBuilder requestUrl = new StringBuilder("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8");
+		StringBuilder requestUrl = new StringBuilder(
+				"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8");
 		addParam(requestUrl, "q", query);
 		addParam(requestUrl, "imgsz", settings.imageSize);
 		addParam(requestUrl, "imgcolor", settings.imageColor);
 		addParam(requestUrl, "imgtype", settings.imageType);
 		addParam(requestUrl, "as_sitesearch", settings.imageDomain);
-		Toast.makeText(this, "searching: " + query +"\nurl: "+requestUrl, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "searching: " + query + "\nurl: " + requestUrl,
+				Toast.LENGTH_SHORT).show();
 		client.get(requestUrl.toString(), new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
