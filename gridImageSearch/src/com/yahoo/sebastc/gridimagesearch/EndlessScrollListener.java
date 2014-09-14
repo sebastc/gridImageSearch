@@ -1,4 +1,4 @@
-package menu_settings;
+package com.yahoo.sebastc.gridimagesearch;
 
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;

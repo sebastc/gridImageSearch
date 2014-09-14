@@ -5,7 +5,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import menu_settings.EndlessScrollListener;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
