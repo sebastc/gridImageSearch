@@ -5,6 +5,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import menu_settings.EndlessScrollListener;
+
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,40 +70,34 @@ public class ImageSearchActivity extends Activity {
 		});
 		gvResults = (GridView) findViewById(R.id.gvResults);
 		gvResults.setAdapter(aImages);
+		gvResults.setOnScrollListener(new EndlessScrollListener() {
+	        @Override
+	        public void onLoadMore(int page, int totalItemsCount) {
+	                // Triggered only when new data needs to be appended to the list
+	                // Add whatever code is needed to append new items to your AdapterView
+	            customLoadMoreDataFromApi(totalItemsCount); 
+	                // or customLoadMoreDataFromApi(totalItemsCount); 
+	        }
+	        });
+		
+		
 		if(getIntent().hasExtra("query")) {
 			etQuery.setText(getIntent().getStringExtra("query"));
 			onImageSearch();
 		}
 	}
 
-	private void addParam(StringBuilder url, String paramName, Enum<?> value) {
-		addParam(url, paramName, value.toString());
-	}
-
-	private void addParam(StringBuilder url, String paramName, String value) {
-		if (value == null || value.equals("ALL"))
-			return;
-		try {
-			value = URLEncoder.encode(value, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		url.append("&").append(paramName).append("=").append(value);
-	}
-
-	public void onImageSearch(View v) {
-		onImageSearch();
-	}
-
-	private void onImageSearch() {
-		aImages.clear();
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(etQuery.getWindowToken(), 0);
+    // Append more data into the adapter
+    public void customLoadMoreDataFromApi(int offset) {
+      // This method probably sends out a network request and appends new data items to your adapter. 
+      // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
+      // Deserialize API response and then construct new objects to append to the adapter
 		String query = etQuery.getText().toString();
 		AsyncHttpClient client = new AsyncHttpClient();
 		StringBuilder requestUrl = new StringBuilder(
 				"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8");
 		addParam(requestUrl, "q", query);
+		addParam(requestUrl, "start", Integer.toString(offset));
 		addParam(requestUrl, "imgsz", settings.imageSize);
 		addParam(requestUrl, "imgcolor", settings.imageColor);
 		addParam(requestUrl, "imgtype", settings.imageType);
@@ -130,7 +126,32 @@ public class ImageSearchActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 			}
 		});
+    }
 
+	private void addParam(StringBuilder url, String paramName, Enum<?> value) {
+		addParam(url, paramName, value.toString());
+	}
+
+	private void addParam(StringBuilder url, String paramName, String value) {
+		if (value == null || value.equals("ALL"))
+			return;
+		try {
+			value = URLEncoder.encode(value, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		url.append("&").append(paramName).append("=").append(value);
+	}
+
+	public void onImageSearch(View v) {
+		onImageSearch();
+	}
+
+	private void onImageSearch() {
+		aImages.clear();
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(etQuery.getWindowToken(), 0);
+		customLoadMoreDataFromApi(0);
 	}
 
 	public void onSettingsClick(MenuItem v) {
