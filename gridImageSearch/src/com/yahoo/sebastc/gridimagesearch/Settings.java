@@ -11,17 +11,53 @@ public class Settings implements Serializable {
 	public Size imageSize = Size.ALL;
 	public ImageColor imageColor = ImageColor.ALL;
 	public ImageType imageType = ImageType.ALL;
-	public String imageSite = null;
+	public String imageDomain = null;
 
 	public enum Size {
-		ALL, SMALL, MEDIUM, LARGE, EXTRA_LARGE
+		ALL(null), SMALL("icon"), MEDIUM("small|medium|large|xlarge"), LARGE(
+				"xxlarge"), XLARGE("huge");
+
+		private String value;
+
+		private Size(String value) {
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			return value;
+		}
 	}
 
 	public enum ImageColor {
-		ALL, BLACK, BLUE, BROWN, GRAY, GREEN
+		ALL(null), BLACK("black"), BLUE("blue"), BROWN("brown"), GRAY("gray"), GREEN(
+				"green");
+
+		private String value;
+
+		private ImageColor(String value) {
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			return value;
+		}
 	}
 
 	public enum ImageType {
-		ALL, FACES, PHOTO, CLIP_ART, LINE_ART
+		ALL(null), FACE("face"), PHOTO("photo"), CLIPART("clipart"), LINEART(
+				"lineart");
+
+		private String value;
+
+		private ImageType(String value) {
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			return value;
+		}
 	}
 }

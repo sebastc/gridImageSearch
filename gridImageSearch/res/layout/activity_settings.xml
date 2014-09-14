@@ -8,11 +8,12 @@
         android:id="@+id/tvSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvDomain"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="@string/settings_image_size_label" />
+        android:text="@string/settings_image_size_label"/>
 
     <Spinner
         android:id="@+id/spinnerSize"
@@ -77,7 +78,7 @@
     
 
     <TextView
-        android:id="@+id/tvSite"
+        android:id="@+id/tvDomain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvType"
@@ -85,20 +86,20 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_toLeftOf="@+id/spinnerColor"
-        android:text="@string/settings_image_site_label" />
+        android:text="@string/settings_image_domain_label" />
 
     <EditText
-        android:id="@+id/etSite"
+        android:id="@+id/etDomain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvSite"
-        android:layout_alignBottom="@+id/tvSite"
+        android:layout_alignBaseline="@+id/tvDomain"
+        android:layout_alignBottom="@+id/tvDomain"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
-        android:layout_toEndOf="@+id/tvSite"
+        android:layout_toEndOf="@+id/tvDomain"
         android:ems="10"
-        android:inputType="textUri"
-        android:hint="@string/settings_image_site_hint">
+        android:inputType="text"
+        android:hint="@string/settings_image_domain_hint">
 
         <requestFocus />
     </EditText>

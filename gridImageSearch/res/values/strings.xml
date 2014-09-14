@@ -9,9 +9,9 @@
     <string name="settings_image_size_label">Size</string>
     <string name="settings_image_color_label">Color</string>
     <string name="settings_image_type_label">Type</string>
-    <string name="settings_image_site_label">Site</string>
+    <string name="settings_image_domain_label">Domain</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="ok">Ok</string>
-    <string name="settings_image_site_hint">url</string>
+    <string name="ok">OK</string>
+    <string name="settings_image_domain_hint">All</string>
 
 </resources>

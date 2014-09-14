@@ -64,7 +64,7 @@ public class SettingsActivity extends Activity {
 				settings.imageSize = Size.ALL;
 			}
 		});
-		setupTextField(R.id.etSite, settings.imageSite, new TextWatcher() {
+		setupTextField(R.id.etDomain, settings.imageDomain, new TextWatcher() {
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -77,7 +77,7 @@ public class SettingsActivity extends Activity {
 			
 			@Override
 			public void afterTextChanged(Editable s) {
-				settings.imageSite = s.toString();
+				settings.imageDomain = s.toString();
 			}
 		});
 		
