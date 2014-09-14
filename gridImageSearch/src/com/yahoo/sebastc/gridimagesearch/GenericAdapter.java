@@ -69,7 +69,7 @@ public abstract class GenericAdapter<T> extends BaseAdapter {
      */
     @Override
     public int getCount() {
-        return dataList.size() + 1;
+        return dataList.isEmpty()?0:dataList.size() + 1;
     }
 
 
