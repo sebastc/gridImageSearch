@@ -68,6 +68,10 @@ public class ImageSearchActivity extends Activity {
 		});
 		gvResults = (GridView) findViewById(R.id.gvResults);
 		gvResults.setAdapter(aImages);
+		if(getIntent().hasExtra("query")) {
+			etQuery.setText(getIntent().getStringExtra("query"));
+			onImageSearch();
+		}
 	}
 
 	private void addParam(StringBuilder url, String paramName, Enum<?> value) {
