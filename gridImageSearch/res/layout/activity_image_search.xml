@@ -24,6 +24,12 @@
         android:layout_toLeftOf="@+id/btnSearch"
         android:ems="10"
         android:hint="@string/search"
+        android:imeActionLabel="Search"
+        android:imeActionId="3"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:lines="1"
+        android:maxLines="1"
         android:text="@null" />
 
     <GridView

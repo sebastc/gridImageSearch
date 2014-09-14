@@ -98,7 +98,7 @@
         android:layout_marginEnd="20dp"
         android:layout_toEndOf="@+id/tvDomain"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="textUri|textNoSuggestions"
         android:hint="@string/settings_image_domain_hint">
 
         <requestFocus />
