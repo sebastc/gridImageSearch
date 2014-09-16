@@ -1,4 +1,4 @@
-gridImageSearch
+Grid Image Search
 ===============
 
 
