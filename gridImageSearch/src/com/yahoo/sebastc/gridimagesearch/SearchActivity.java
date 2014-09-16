@@ -5,13 +5,13 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,6 +48,21 @@ public class SearchActivity extends Activity {
 		settings = new Settings();
 
 		setupView();
+		handleIntent(getIntent());
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		handleIntent(intent);
+	}
+
+	private void handleIntent(Intent intent) {
+
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			String query = intent.getStringExtra(SearchManager.QUERY);
+			etQuery.setText(query);
+			onImageSearch();
+		}
 	}
 
 	@Override
@@ -70,27 +85,25 @@ public class SearchActivity extends Activity {
 		gvResults = (GridView) findViewById(R.id.gvResults);
 		gvResults.setAdapter(aImages);
 		gvResults.setOnScrollListener(new EndlessScrollListener() {
-	        @Override
-	        public void onLoadMore(int page, int totalItemsCount) {
-	                // Triggered only when new data needs to be appended to the list
-	                // Add whatever code is needed to append new items to your AdapterView
-	            customLoadMoreDataFromApi(totalItemsCount); 
-	                // or customLoadMoreDataFromApi(totalItemsCount); 
-	        }
-	        });
-		
-		
-		if(getIntent().hasExtra("query")) {
-			etQuery.setText(getIntent().getStringExtra("query"));
-			onImageSearch();
-		}
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				// Triggered only when new data needs to be appended to the list
+				// Add whatever code is needed to append new items to your
+				// AdapterView
+				customLoadMoreDataFromApi(totalItemsCount);
+				// or customLoadMoreDataFromApi(totalItemsCount);
+			}
+		});
 	}
 
-    // Append more data into the adapter
-    public void customLoadMoreDataFromApi(int offset) {
-      // This method probably sends out a network request and appends new data items to your adapter. 
-      // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
-      // Deserialize API response and then construct new objects to append to the adapter
+	// Append more data into the adapter
+	public void customLoadMoreDataFromApi(int offset) {
+		// This method probably sends out a network request and appends new data
+		// items to your adapter.
+		// Use the offset value and add it as a parameter to your API request to
+		// retrieve paginated data.
+		// Deserialize API response and then construct new objects to append to
+		// the adapter
 		String query = etQuery.getText().toString();
 		AsyncHttpClient client = new AsyncHttpClient();
 		StringBuilder requestUrl = new StringBuilder(
@@ -125,7 +138,7 @@ public class SearchActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 			}
 		});
-    }
+	}
 
 	private void addParam(StringBuilder url, String paramName, Enum<?> value) {
 		addParam(url, paramName, value.toString());
@@ -148,6 +161,7 @@ public class SearchActivity extends Activity {
 
 	private void onImageSearch() {
 		aImages.clear();
+		etQuery.clearFocus();
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(etQuery.getWindowToken(), 0);
 		customLoadMoreDataFromApi(0);
@@ -168,9 +182,14 @@ public class SearchActivity extends Activity {
 				this.settings = (Settings) data
 						.getSerializableExtra("settings");
 				aImages.clear();
-				etQuery.requestFocus();
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.showSoftInputFromInputMethod(etQuery.getWindowToken(), 0); //FIXME the soft keyboard is not showing !!??
+				if (etQuery.getText().toString().trim().isEmpty()) {
+					etQuery.requestFocus();
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.showSoftInputFromInputMethod(etQuery.getWindowToken(),
+							0); // FIXME the soft keyboard is not showing !!??
+				} else {
+					onImageSearch();
+				}
 			} else {
 				Toast.makeText(this, "Preserved existing settings",
 						Toast.LENGTH_SHORT).show();

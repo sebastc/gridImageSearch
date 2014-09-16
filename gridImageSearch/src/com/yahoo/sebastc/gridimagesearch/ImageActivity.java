@@ -1,6 +1,9 @@
 package com.yahoo.sebastc.gridimagesearch;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,9 +11,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.Images;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.ShareActionProvider;
 
 import com.loopj.android.image.SmartImageTask.OnCompleteListener;
@@ -27,7 +32,7 @@ public class ImageActivity extends Activity {
 		setContentView(R.layout.activity_image);
 		ivImage = (SmartImageView) findViewById(R.id.iv_image);
 		String url = getIntent().getExtras().getString("url");
-		ivImage.setImageUrl(url, android.R.drawable.ic_dialog_alert,
+		ivImage.setImageUrl(url, android.R.drawable.ic_dialog_alert, 0,
 				new OnCompleteListener() {
 					@Override
 					public void onComplete() {
@@ -69,6 +74,17 @@ public class ImageActivity extends Activity {
 		MenuItem item = menu.findItem(R.id.share);
 		// Fetch reference to the share action provider
 		miShareAction = (ShareActionProvider) item.getActionProvider();
+		
+		// Associate searchable configuration with the SearchView
+	    SearchManager searchManager =
+	           (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+	    SearchView searchView =
+	            (SearchView) menu.findItem(R.id.search).getActionView();
+	    SearchableInfo searchableInfo = searchManager.getSearchableInfo(getComponentName());
+	    if(searchableInfo==null)
+	    	throw new NullPointerException("searchableInfo not found. ");
+		searchView.setSearchableInfo(
+	            searchableInfo);
 
 		return true;
 	}

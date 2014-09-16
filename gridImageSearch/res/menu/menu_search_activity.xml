@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">    <item
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!--
+    <item
+        android:id="@+id/search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@drawable/ic_action_search"
+        android:showAsAction="ifRoom"
+        android:title="@string/search"/>
+    -->
+    <item
         android:id="@+id/btn_settings"
         android:icon="@drawable/ic_settings"
-        android:title="@string/settings"
-        android:onClick="onSettingsClick" android:showAsAction="always"/>
+        android:onClick="onSettingsClick"
+        android:showAsAction="always"
+        android:title="@string/settings"/>
 
 </menu>
